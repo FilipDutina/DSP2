@@ -75,8 +75,6 @@ void main( void )
     calculateShelvingCoeff(-0.3, hp_coeffs);
     calculatePeekCoeff(0.7, 0.0, sh_coeffs);
 
-    //gde koristi shelvingLP i shelvingHP???
-
     while(1)
     {
     	aic3204_read_block(sampleBufferL, sampleBufferR);
@@ -85,7 +83,7 @@ void main( void )
 
     	for(i = 1; i < AUDIO_IO_SIZE; i++)
     	    sampleBufferL[i] = 0;
-
+    	//ove idu shelvingLP i shelvingHP
     	for(i = 0; i < AUDIO_IO_SIZE; i++)
     	    sampleBufferR[i] = shelvingPeek(sampleBufferL[i], sh_coeffs, z_x, z_y, 32767);
 
