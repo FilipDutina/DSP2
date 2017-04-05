@@ -71,9 +71,9 @@ void main( void )
         z_y[i] = 0;
     }
 
-    calculateShelvingCoeff(0.3, lp_coeffs);
-    calculateShelvingCoeff(-0.3, hp_coeffs);
-    calculatePeekCoeff(0.7, 0.0, sh_coeffs);
+    calculateShelvingCoeff(0.3, lp_coeffs);	//low pass
+    calculateShelvingCoeff(-0.3, hp_coeffs);	//high pass
+    calculatePeekCoeff(0.7, 0.0, sh_coeffs);	//peek
 
     while(1)
     {
@@ -83,9 +83,15 @@ void main( void )
 
     	for(i = 1; i < AUDIO_IO_SIZE; i++)
     	    sampleBufferL[i] = 0;
-    	//ove idu shelvingLP i shelvingHP
+
+    	//Int16 shelvingLP(Int16 input, Int16* coeff, Int16* z_x, Int16* z_y, Int16 k)
+    	//Int16 shelvingHP(Int16 input, Int16* coef, Int16* z_x, Int16* z_y, Int16 k)
+    	//Int16 shelvingPeek(Int16 input, Int16* coeff, Int16* z_x, Int16* z_y, Int16 k)
+
     	for(i = 0; i < AUDIO_IO_SIZE; i++)
-    	    sampleBufferR[i] = shelvingPeek(sampleBufferL[i], sh_coeffs, z_x, z_y, 32767);
+    		//sampleBufferR[i] = shelvingLP(sampleBufferL[i], lp_coeffs, z_x, z_y, 32767);
+    		//sampleBufferR[i] = shelvingHP(sampleBufferL[i], hp_coeffs, z_x, z_y, 32767);
+    		//sampleBufferR[i] = shelvingPeek(sampleBufferL[i], sh_coeffs, z_x, z_y, 32767);
 
 		aic3204_write_block(sampleBufferR, sampleBufferR);
 	}
